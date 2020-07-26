@@ -112,3 +112,23 @@ stages:
       method: GET
     response:
       status_code: 999
+---
+
+test_name: Test skipif failure goes on to test failure
+
+includes:
+  - !include common.yaml
+
+marks:
+  # ie, only run this test against insecure server. incorrect logic.
+  - skipif: "'https' in '{tavern.env_vars.AA}'"
+
+_xfail: run
+
+stages:
+  - name: This test should not run
+    request:
+      url: "{host}/fake_list"
+      method: GET
+    response:
+      status_code: 999

@@ -10,7 +10,7 @@ import yaml
 
 from tavern.schemas.files import verify_tests
 from tavern.util import exceptions
-from tavern.util.dict_util import format_keys
+from tavern.util.dict_util import format_keys, get_tavern_box
 from tavern.util.loader import IncludeLoader
 
 from .item import YamlItem
@@ -207,7 +207,7 @@ class YamlFile(pytest.File):
             fmt_vars.update(**i.get("variables", {}))
 
         # Needed if something in a config file uses tavern.env_vars
-        tavern_box = Box({"tavern": {"env_vars": dict(os.environ)}})
+        tavern_box = get_tavern_box()
 
         try:
             fmt_vars = _format_without_inner(fmt_vars, tavern_box)

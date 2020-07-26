@@ -1,9 +1,10 @@
 import collections
 import logging
+import os
 import re
 import string
 
-from box import Box
+from box import Box, box
 import jmespath
 
 from tavern.util.loader import (
@@ -547,3 +548,8 @@ def check_keys_match_recursive(expected_val, actual_val, keys, strict=True):
             raise exceptions.KeyMismatchError(
                 "Key mismatch: ({})".format(full_err())
             ) from e
+
+
+def get_tavern_box() -> box.Box:
+    """Get the 'tavern' box"""
+    return Box({"env_vars": dict(os.environ)})

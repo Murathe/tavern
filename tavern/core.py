@@ -4,7 +4,6 @@ from distutils.util import strtobool
 import logging
 import os
 
-from box import Box
 import pytest
 
 from tavern.schemas.files import wrapfile
@@ -13,7 +12,7 @@ from tavern.util.strict_util import StrictLevel
 from .plugins import get_expected, get_extra_sessions, get_request_type, get_verifiers
 from .util import exceptions
 from .util.delay import delay
-from .util.dict_util import format_keys
+from .util.dict_util import format_keys, get_tavern_box
 from .util.retry import retry
 
 logger = logging.getLogger(__name__)
@@ -52,7 +51,7 @@ def _get_included_stages(tavern_box, test_block_config, test_spec, available_sta
 
     Args:
         available_stages (list): List of stages which already exist
-        tavern_box (box.Box): Available parameters
+        tavern_box (box.Box): Available parameters for fomatting at this point
         test_block_config (dict): Current test config dictionary
         test_spec (dict): Specification for current test
 
@@ -125,7 +124,7 @@ def run_test(in_file, test_spec, global_cfg):
     if "variables" not in test_block_config:
         test_block_config["variables"] = {}
 
-    tavern_box = Box({"env_vars": dict(os.environ)})
+    tavern_box = get_tavern_box()
 
     if not test_spec:
         logger.warning("Empty test block in %s", in_file)
