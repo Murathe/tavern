@@ -214,7 +214,8 @@ class YamlFile(pytest.File):
             msg = "Tried to use tavern format variable that did not exist"
             raise exceptions.MissingFormatError(msg) from e
 
-        return tavern_box.merge_update(**fmt_vars)
+        tavern_box.merge_update(**fmt_vars)
+        return tavern_box
 
     def _generate_items(self, test_spec):
         """Modify or generate tests based on test spec

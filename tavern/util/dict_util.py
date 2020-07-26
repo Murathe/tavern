@@ -42,7 +42,7 @@ def _check_and_format_values(to_format, box_vars):
             would_replace = formatter.get_field(field_name, [], box_vars)[0]
         except KeyError as e:
             logger.error(
-                "Failed to resolve string [%s] with variables [%s]", to_format, box_vars
+                "Failed to resolve string '%s' with variables '%s'", to_format, box_vars
             )
             logger.error("Key(s) not found in format: %s", field_name)
             raise exceptions.MissingFormatError(field_name) from e
@@ -552,4 +552,4 @@ def check_keys_match_recursive(expected_val, actual_val, keys, strict=True):
 
 def get_tavern_box() -> box.Box:
     """Get the 'tavern' box"""
-    return Box({"env_vars": dict(os.environ)})
+    return Box({"tavern": {"env_vars": dict(os.environ)}})
